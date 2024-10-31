@@ -8,6 +8,12 @@ bool_touch_0_pressing =False
 bool_touch_1_pressing =False
 bool_touch_2_pressing =False
 
+bool_use_UART =True
+
+if bool_use_UART:
+    #https://python.microbit.org/v/3/api/microbit.uart
+    uart.init(baudrate=9600, bits=8, parity=None, stop=1, tx=None, rx=None)
+    
 
 while True:
 
@@ -93,10 +99,22 @@ while True:
     int_log+= byte_touch_logo_pressing_9 * 100000
     int_log+= byte_microphone_9 * 1000000
     int_log+= byte_light_level_9 * 10000000
-    print(int_log)
-    sleep(20)
 
-
-   
+    if not bool_use_UART:
+        print(int_log)
+        data = [int_log & 0xFF,         # Least significant byte
+                (int_log >> 8) & 0xFF,  # Next byte
+                (int_log >> 16) & 0xFF, # Next byte
+                (int_log >> 24) & 0xFF] # Most significant byte
+        print(data)
         
-    
+    if bool_use_UART:
+        # Manually extract bytes in little-endian order
+        data = [int_log & 0xFF,         # Least significant byte
+                (int_log >> 8) & 0xFF,  # Next byte
+                (int_log >> 16) & 0xFF, # Next byte
+                (int_log >> 24) & 0xFF] # Most significant byte
+        uart.write(bytes([0,0,0,0]))
+        uart.write(bytes(data))
+    sleep(100)
+    #sleep(1000)
