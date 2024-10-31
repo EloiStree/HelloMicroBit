@@ -28,7 +28,7 @@ while True:
     display.set_pixel(0,4,int(byte_light_level_9))
     
     byte_temperature_level_55 = temperature()
-    byte_temperature_level_9 = round(((byte_temperature_level_55+5)/20)*9.0)
+    byte_temperature_level_9 = round(((byte_temperature_level_55+5)/55)*9.0)
     if(byte_temperature_level_9>9):
         byte_temperature_level_9=9
     if(byte_temperature_level_9<0):
@@ -82,8 +82,6 @@ while True:
     display.set_pixel(1,1,byte_touch_1_pressing_9)
     display.set_pixel(2,1,byte_touch_2_pressing_9)
     display.set_pixel(3,1,byte_touch_logo_pressing_9)
-    display.set_pixel(3,1,byte_microphone_9)
-    display.set_pixel(3,1,byte_light_level_9)
     
     
     int_log =1700000000
